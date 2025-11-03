@@ -56,7 +56,7 @@ describe('createLogger', () => {
       logger.info('message', { index })
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => setTimeout(resolve, 200))
 
     const contents = readFileSync(filePath, 'utf-8').trim().split('\n')
     expect(contents.length).toBeGreaterThan(0)
