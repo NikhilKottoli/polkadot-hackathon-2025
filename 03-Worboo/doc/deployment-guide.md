@@ -145,16 +145,18 @@ Confirm the transaction in block explorers such as https://moonbase.moonscan.io/
      "maxRetries": 3,
      "backoffMs": 1000,
      "cachePath": ".cache/processed-events.jsonl",
-     "healthPath": ".cache/health.json",
+    "cacheMaxEntries": 1000,
+    "healthPath": ".cache/health.json",
      "healthHost": "0.0.0.0",
      "healthCorsOrigin": "*",
      "healthPort": 8787,
      "logFilePath": ".logs/worboo-relayer.log",
      "logMaxBytes": 5242880,
-     "logBackupCount": 5
+     "logBackupCount": 5,
+    "logHttpEndpoint": "https://logs.example/ship"
    }
    ```
-   > You can store the config file wherever you like. Set `RELAYER_CONFIG_PATH` if you keep it outside `packages/relayer/config/`.
+   > You can store the config file wherever you like. Set `RELAYER_CONFIG_PATH` if you keep it outside `packages/relayer/config/`. Use `RELAYER_LOG_HTTP_ENDPOINT` (or `logHttpEndpoint`) to forward structured JSON logs to your collector.
 
    Environment variables remain supported and always take precedence, so you can still drop quick overrides into a `.env` file if required (see `packages/relayer/.env.example`). Set `healthCorsOrigin` (or `RELAYER_HEALTH_CORS_ORIGIN`) to `"disable"` if you need to omit the header entirely.
 
@@ -176,7 +178,7 @@ Confirm the transaction in block explorers such as https://moonbase.moonscan.io/
 
 When a game win occurs (via `recordGame`), the relayer mints `rewardPerWin` WBOO to the victorious player.
 
-> Processed events are persisted to `.cache/processed-events.jsonl` by default so relayer restarts will not double-mint. Delete the file if you intentionally need to re-run historical events.
+> Processed events are persisted to `.cache/processed-events.jsonl` by default so relayer restarts will not double-mint. Configure `cacheMaxEntries` (or `RELAYER_CACHE_MAX_ENTRIES`) to cap retention; the oldest entries are trimmed automatically. Delete the file if you intentionally need to re-run historical events.
 
 Check service health at any time:
 
@@ -252,5 +254,9 @@ PM2 will keep the service alive and restart on crashes. Use `pm2 restart worboo-
 ---
 
 All steps complete—Worboo is now live on Moonbase Alpha with automatic reward minting. Happy hacking! 🟩🟨⬛
+
+
+
+
 
 

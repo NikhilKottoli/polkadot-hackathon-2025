@@ -181,6 +181,7 @@ Config keys mirror the environment variables (which still work for quick overrid
   "maxRetries": 3,
   "backoffMs": 1000,
   "cachePath": ".cache/processed-events.jsonl",
+  "cacheMaxEntries": 1000,
   "healthPath": ".cache/health.json",
   "healthHost": "0.0.0.0",
   "healthCorsOrigin": "*",
@@ -192,7 +193,9 @@ Config keys mirror the environment variables (which still work for quick overrid
 ```
 
 Set `RELAYER_CONFIG_PATH` if you store the file outside `packages/relayer/config/`.
-> Container deploy: docker build -f packages/relayer/Dockerfile -t worboo-relayer . then run with your mounted elayer.config.json. Process manager: pm2 start packages/relayer/ecosystem.config.cjs.
+> Container deploy: `docker build -f packages/relayer/Dockerfile -t worboo-relayer .` then run with your mounted `relayer.config.json`. Process manager: `pm2 start packages/relayer/ecosystem.config.cjs`.
+
+Processed event caches are capped via `cacheMaxEntries` (or `RELAYER_CACHE_MAX_ENTRIES`); oldest entries are trimmed automatically to prevent unbounded growth while preserving restart safety. Use `RELAYER_LOG_HTTP_ENDPOINT` to forward JSON log lines to an external collector.
 
 Use `healthCorsOrigin: "disable"` (or `RELAYER_HEALTH_CORS_ORIGIN=disable`) if you need to omit the `Access-Control-Allow-Origin` header entirely.
 
@@ -279,6 +282,7 @@ Short term goals are tracked in [`doc/implementation-plan.md`](doc/implementatio
 - [Post-MVP Roadmap](doc/roadmap-next.md)
 - [Testing Matrix & Coverage Checklist](doc/testing-matrix.md)
 - [Observability Guide](doc/observability.md)
+- [Indexer Scaffold](packages/indexer/README.md)
 - [Migrating Ethereum DApps to Polkadot – Technical Roadmap & Strategy (PDF)](doc/Migrating%20Ethereum%20DApps%20to%20Polkadot%20–%20Technical%20Roadmap%20%26%20Strategy.pdf)
 - [Moonbeam Docs](https://docs.moonbeam.network/)
 - [RainbowKit](https://www.rainbowkit.com/) / [wagmi](https://wagmi.sh/) references.
@@ -286,6 +290,14 @@ Short term goals are tracked in [`doc/implementation-plan.md`](doc/implementatio
 ---
 
 Made with 🟩🟨⬛ by the Worboo team for the Dot Your Future hackathon.
+
+
+
+
+
+
+
+
 
 
 

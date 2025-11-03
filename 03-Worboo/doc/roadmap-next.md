@@ -2,7 +2,7 @@
 
 ## Phase 1 – Operational Hardening
 - **Auto mint relayer**: persistence, retry/backoff, reward banner, CLI health snapshot, Dockerfile, and PM2 profile shipped; next add structured log aggregation and cache rotation.
-- **Indexer integration**: bootstrap a Subsquid (or SubQuery) project to expose leaderboard APIs with streak and completion stats.
+- **Indexer integration**: placeholder scaffold lives in `packages/indexer/`; next bootstrap Subsquid/SubQuery project and expose leaderboard APIs with streak and completion stats.
 - **UI telemetry**: instrument React Query cache misses, wallet connection failures, and purchase errors for better observability during mainnet launch.
 
 ## Phase 2 – Trustless Proof-of-Play
@@ -21,5 +21,6 @@
 - Integrate AI-guided hint systems powered by off-chain inference with on-chain entitlement checks.
 
 Each phase builds on the current TypeScript + Solidity base without sacrificing the hackathon deliverables already in place.
+
 
 
